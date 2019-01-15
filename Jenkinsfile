@@ -10,16 +10,16 @@ pipeline {
                 sh 'go get gopkg.in/yaml.v2'
                 sh 'go build'
                 sh 'chmod +x salt-auto-update'
-                sh 'ls -l'
-                stash includes: 'salt-auto-update', name: 'app'
+                sh 'tar -cvf salt-auto-update.tar config.yaml salt-script.sh salt-auto-update'
+                stash includes: 'salt-auto-update.tar', name: 'app'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
                 unstash 'app'
-                archiveArtifacts artifacts: 'salt-auto-update', fingerprint: true
-                sh "curl --insecure --user ${USERNAME}:${SSH_PASSWORD} -T salt-auto-update sftp://${REMOTE_SERVER}/~/"
+                archiveArtifacts artifacts: 'salt-auto-update.tar', fingerprint: true
+                sh "curl --insecure --user ${USERNAME}:${SSH_PASSWORD} -T salt-auto-update.tar sftp://${REMOTE_SERVER}/~/"
             }
         }
     }
