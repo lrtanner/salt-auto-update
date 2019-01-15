@@ -8,7 +8,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'ls'
-                sh go build
+                sh 'go build'
                 sh 'ls'
                 stash includes: 'salt-auto-update', name: 'app'
             }
