@@ -1,0 +1,2 @@
+SaltInstallerDirectory: /srv/salt/packages
+WindowsSaltMinion: windows
