@@ -7,11 +7,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'pwd'
-                sh 'ls'
                 sh 'go get gopkg.in/yaml.v2'
                 sh 'go build'
-                sh 'ls'
+                chmod +x salt-auto-update
                 stash includes: 'salt-auto-update', name: 'app'
             }
         }
