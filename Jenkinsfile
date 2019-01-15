@@ -9,7 +9,7 @@ pipeline {
                 echo 'Building..'
                 sh 'go get gopkg.in/yaml.v2'
                 sh 'go build'
-                chmod +x salt-auto-update
+                sh 'chmod +x salt-auto-update'
                 stash includes: 'salt-auto-update', name: 'app'
             }
         }
