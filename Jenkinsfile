@@ -1,5 +1,5 @@
 // workspaces
-def goWs = '/go/src/github.com/logrhythm/case-api'
+def goWs = '/go/src/github.com/logrhythm/salt-auto-update'
 
 pipeline {
     agent { node label: "golang-1.10", customWorkspace: goWs }
