@@ -20,17 +20,7 @@ pipeline {
                 echo 'Deploying....'
                 unstash 'app'
                 archiveArtifacts artifacts: 'salt-auto-update', fingerprint: true
-                script {
-                  def remote = [:]
-                  remote.name = 'saltmaster'
-                  remote.host = "${REMOTE_SERVER}"
-                  remote.user = "${USERNAME}"
-                  remote.password = "${SSH_PASSWORD}"
-                  remote.allowAnyHosts = true
-                  stage('Remote SSH') {
-                    sshPut remote: remote, from: 'salt-auto-update', into: '~'
-                  }
-                }
+                sh "curl --insecure --user ${USERNAME}:${SSH_PASSWORD} -T salt-auto-update sftp://${REMOTE_SERVER}/~/"
             }
         }
     }
