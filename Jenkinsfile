@@ -2,10 +2,9 @@
 def goWs = '/go/src/github.com/logrhythm/case-api'
 
 pipeline {
-    agent any
+    agent { node label: "golang-1.10", customWorkspace: goWs }
     stages {
         stage('Build') {
-            agent { label "golang-1.10", customWorkspace: goWs }
             steps {
                 echo 'Building..'
                 sh 'ls'
