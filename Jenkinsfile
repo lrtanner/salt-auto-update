@@ -15,23 +15,20 @@ pipeline {
                 stash includes: 'salt-auto-update', name: 'app'
             }
         }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+                echo "Remote server: ${REMOTE_SERVER}"
+                echo "Username: ${USERNAME}"
+                echo "SSH Password: ${SSH_PASSWORD}"
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
                 unstash 'app'
                 archiveArtifacts artifacts: 'salt-auto-update', fingerprint: true
-                script {
-                  def remote = [:]
-                  remote.name = 'saltmaster'
-                  remote.host = '10.1.23.103'
-                  remote.user = 'logrhythm'
-                  remote.password = 'logrhythm!1'
-                  remote.allowAnyHosts = true
-                  stage('Remote SSH') {
-                    writeFile file: 'abc.sh', text: 'ls -lrt'
-                    sshPut remote: remote, from: 'abc.sh', into: '.'
-                  }
-                }
+
             }
         }
     }
