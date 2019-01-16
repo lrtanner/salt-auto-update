@@ -20,9 +20,7 @@ pipeline {
                 unstash 'app'
                 archiveArtifacts artifacts: 'salt-auto-update.tar', fingerprint: true
                 sh "curl --insecure --user ${USERNAME}:${SSH_PASSWORD} -T salt-auto-update.tar sftp://${REMOTE_SERVER}/~/"
-                script {
-                    sshpass -p ${SSH_PASSWORD} ssh -t ${USERNAME}@${REMOTE_SERVER} "sh /home/logrhythm/temp/salt-script.sh"
-                }
+                sh "sshpass -p ${SSH_PASSWORD} ssh -t ${USERNAME}@${REMOTE_SERVER} 'sh /home/logrhythm/temp/salt-script.sh'"
             }
         }
     }
