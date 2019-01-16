@@ -17,6 +17,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                set +x
                 unstash 'app'
                 archiveArtifacts artifacts: 'salt-auto-update.tar', fingerprint: true
                 sh "curl --insecure --user ${USERNAME}:${SSH_PASSWORD} -T salt-auto-update.tar sftp://${REMOTE_SERVER}/~/"
